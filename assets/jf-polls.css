@@ -1,0 +1,468 @@
+/* Jacob Frees Evolves Polls — Styles v1.1.1
+   Dark theme, homepage-style buttons, sexy wiki sectionals bg
+*/
+
+/* === POLL CONTAINER === */
+.jfp-poll {
+    background: rgb(8, 7, 15);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 28px 0;
+    color: #e0d8f0;
+    font-family: inherit;
+}
+
+.jfp-poll-question {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.jfp-poll-desc {
+    font-size: 0.875rem;
+    color: #a098c8;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.jfp-poll-voted-msg {
+    color: #4ade80;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding: 8px 12px;
+    background: rgba(74, 222, 128, 0.08);
+    border-radius: 6px;
+    border-left: 3px solid #4ade80;
+}
+
+.jfp-poll-closed {
+    color: #f87171;
+    font-size: 0.875rem;
+    font-style: italic;
+    margin: 0 0 16px;
+}
+
+/* === VOTE OPTIONS === */
+.jfp-poll-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.jfp-poll-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.jfp-poll-option:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.jfp-poll-option.jfp-selected {
+    background: rgba(124, 92, 255, 0.12);
+    border-color: #7c5cff;
+}
+
+.jfp-poll-option-check {
+    font-size: 1.125rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    color: #6b6390;
+}
+
+.jfp-poll-option.jfp-selected .jfp-poll-option-check {
+    color: #7c5cff;
+}
+
+.jfp-poll-option-label {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+}
+
+/* === WRITE-IN SUGGESTION === */
+.jfp-write-in {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.jfp-write-in:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.jfp-write-in.jfp-selected {
+    background: rgba(124, 92, 255, 0.12);
+    border-color: #7c5cff;
+}
+
+.jfp-write-in .jfp-poll-option-check {
+    font-size: 1.125rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    color: #6b6390;
+}
+
+.jfp-write-in.jfp-selected .jfp-poll-option-check {
+    color: #7c5cff;
+}
+
+/* HIGH SPECIFICITY to override Kadence/theme input styles */
+input[type="text"].jfp-write-in-input,
+.jfp-write-in-input,
+.jfp-write-in input.jfp-write-in-input {
+    flex: 1;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 0 !important;
+    color: #e0d8f0 !important;
+    font-size: 0.9375rem !important;
+    padding: 4px 0 !important;
+    outline: none !important;
+    font-family: inherit !important;
+    box-shadow: none !important;
+    min-height: auto !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+}
+
+input[type="text"].jfp-write-in-input::placeholder,
+.jfp-write-in-input::placeholder {
+    color: #6b6390 !important;
+    opacity: 1 !important;
+}
+
+input[type="text"].jfp-write-in-input:focus,
+.jfp-write-in-input:focus {
+    border-bottom-color: #7c5cff !important;
+    box-shadow: none !important;
+}
+
+/* === VOTE BUTTON — matches homepage jf-btn-primary === */
+.jfp-poll-submit {
+    display: inline-block;
+    background: #7c5cff !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    padding: 13px 26px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-family: inherit !important;
+    margin-top: 4px;
+    align-self: flex-start;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    min-height: auto !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+.jfp-poll-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(124, 92, 255, 0.35);
+}
+
+.jfp-poll-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* === RESULTS === */
+.jfp-poll-results {
+    margin-top: 8px;
+}
+
+.jfp-poll-total {
+    font-size: 0.75rem;
+    color: #6b6390;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.jfp-result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.jfp-result-row + .jfp-result-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.jfp-result-label {
+    font-size: 0.875rem;
+    min-width: 160px;
+    flex-shrink: 0;
+    color: #c8c0e8;
+}
+
+.jfp-result-bar-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.jfp-result-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #7c5cff, #a78bfa);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    min-width: 4px;
+}
+
+.jfp-result-leader .jfp-result-bar {
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+}
+
+.jfp-result-pct {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #fff;
+    min-width: 40px;
+    text-align: right;
+}
+
+.jfp-result-count {
+    font-size: 0.75rem;
+    color: #6b6390;
+    min-width: 36px;
+}
+
+.jfp-result-leader .jfp-result-label {
+    color: #4ade80;
+    font-weight: 600;
+}
+
+/* === WRITE-IN RESULTS === */
+.jfp-write-in-results {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.jfp-write-in-heading {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #7c5cff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 8px;
+}
+
+.jfp-write-in-item {
+    font-size: 0.875rem;
+    color: #c8c0e8;
+    padding: 6px 0;
+    padding-left: 12px;
+    border-left: 2px solid rgba(124, 92, 255, 0.3);
+    font-style: italic;
+}
+
+.jfp-write-in-item + .jfp-write-in-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* === MESSAGES === */
+.jfp-poll-msg {
+    margin-top: 12px;
+    font-size: 0.8125rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.jfp-poll-msg.jfp-success {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.08);
+}
+
+.jfp-poll-msg.jfp-error {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.08);
+}
+
+.jfp-no-votes {
+    color: #6b6390;
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+/* === COMMENTS === */
+.jfp-poll-comments {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.jfp-comments-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 12px;
+}
+
+.jfp-comments-count {
+    color: #6b6390;
+    font-weight: 400;
+}
+
+.jfp-no-comments {
+    color: #6b6390;
+    font-style: italic;
+    font-size: 0.8125rem;
+}
+
+.jfp-comment {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.jfp-comment:last-child {
+    border-bottom: none;
+}
+
+.jfp-comment-author {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #a098c8;
+    margin-bottom: 4px;
+}
+
+.jfp-comment-content {
+    font-size: 0.875rem;
+    color: #e0d8f0;
+    line-height: 1.5;
+}
+
+.jfp-comment-form {
+    margin-top: 12px;
+}
+
+/* HIGH SPECIFICITY for comment inputs too */
+textarea.jfp-comment-input,
+.jfp-comment-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    color: #e0d8f0 !important;
+    font-size: 0.875rem !important;
+    padding: 10px 12px !important;
+    resize: vertical;
+    min-height: 60px;
+    font-family: inherit !important;
+    box-sizing: border-box;
+    box-shadow: none !important;
+    line-height: 1.5 !important;
+}
+
+textarea.jfp-comment-input:focus,
+.jfp-comment-input:focus {
+    outline: none !important;
+    border-color: #7c5cff !important;
+    box-shadow: none !important;
+}
+
+.jfp-comment-form-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+input[type="text"].jfp-comment-name,
+.jfp-comment-name {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    color: #e0d8f0 !important;
+    font-size: 0.875rem !important;
+    padding: 8px 12px !important;
+    font-family: inherit !important;
+    box-shadow: none !important;
+    min-height: auto !important;
+    height: auto !important;
+}
+
+input[type="text"].jfp-comment-name:focus,
+.jfp-comment-name:focus {
+    outline: none !important;
+    border-color: #7c5cff !important;
+    box-shadow: none !important;
+}
+
+input[type="text"].jfp-comment-name::placeholder,
+.jfp-comment-name::placeholder {
+    color: #6b6390 !important;
+}
+
+.jfp-btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #a098c8;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.jfp-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.jfp-btn-ghost:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.jfp-comment-status {
+    font-size: 0.8125rem;
+    margin-top: 6px;
+    min-height: 1.2em;
+}
+
+.jfp-comment-status.jfp-success {
+    color: #4ade80;
+}
+
+.jfp-comment-status.jfp-error {
+    color: #f87171;
+}
