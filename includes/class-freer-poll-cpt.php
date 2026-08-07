@@ -1,10 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-class JFP_CPT {
+class Freer_Poll_CPT {
 
     public static function register() {
-        register_post_type('jf_poll', array(
+        register_post_type('freer_poll', array(
             'labels' => array(
                 'name' => 'Polls',
                 'singular_name' => 'Poll',
@@ -17,7 +17,7 @@ class JFP_CPT {
                 'not_found' => 'No polls found',
                 'not_found_in_trash' => 'No polls in trash',
                 'all_items' => 'All Polls',
-                'menu_name' => 'Evolves Polls',
+                'menu_name' => 'Freer Polls',
             ),
             'public' => true,
             'has_archive' => false,

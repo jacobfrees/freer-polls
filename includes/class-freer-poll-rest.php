@@ -1,9 +1,9 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-class JFP_REST {
+class Freer_Poll_REST {
 
-    const NAMESPACE = 'jf-polls/v1';
+    const NAMESPACE = 'freer-polls/v1';
 
     public static function register_routes() {
         // List polls
@@ -83,7 +83,7 @@ class JFP_REST {
 
     public static function get_polls($request) {
         $query = new WP_Query(array(
-            'post_type' => 'jf_poll',
+            'post_type' => 'freer_poll',
             'post_status' => 'publish',
             'posts_per_page' => 50,
             'orderby' => 'date',
@@ -101,7 +101,7 @@ class JFP_REST {
     public static function get_poll($request) {
         $id = intval($request['id']);
         $poll = get_post($id);
-        if (!$poll || $poll->post_type !== 'jf_poll') {
+        if (!$poll || $poll->post_type !== 'freer_poll') {
             return new WP_Error('not_found', 'Poll not found', array('status' => 404));
         }
         return rest_ensure_response(self::poll_to_array($poll));
@@ -118,7 +118,7 @@ class JFP_REST {
             'post_title' => sanitize_text_field($params['title']),
             'post_excerpt' => isset($params['description']) ? sanitize_textarea_field($params['description']) : '',
             'post_status' => 'publish',
-            'post_type' => 'jf_poll',
+            'post_type' => 'freer_poll',
         ));
 
         if (is_wp_error($poll_id)) {
@@ -133,7 +133,7 @@ class JFP_REST {
     public static function update_poll($request) {
         $id = intval($request['id']);
         $poll = get_post($id);
-        if (!$poll || $poll->post_type !== 'jf_poll') {
+        if (!$poll || $poll->post_type !== 'freer_poll') {
             return new WP_Error('not_found', 'Poll not found', array('status' => 404));
         }
 
@@ -152,12 +152,12 @@ class JFP_REST {
     public static function delete_poll($request) {
         $id = intval($request['id']);
         $poll = get_post($id);
-        if (!$poll || $poll->post_type !== 'jf_poll') {
+        if (!$poll || $poll->post_type !== 'freer_poll') {
             return new WP_Error('not_found', 'Poll not found', array('status' => 404));
         }
 
         global $wpdb;
-        $table = JFP_DB::table_name();
+        $table = Freer_Poll_DB::table_name();
         $wpdb->delete($table, array('poll_id' => $id), array('%d'));
 
         wp_delete_post($id, true);
@@ -171,23 +171,23 @@ class JFP_REST {
         $choices = isset($params['choices']) ? $params['choices'] : (isset($params['choice']) ? array($params['choice']) : array());
 
         // Verify nonce
-        $nonce = $request->get_header('x-jfp-nonce');
-        if (!wp_verify_nonce($nonce, 'jf_poll_vote_' . $id)) {
+        $nonce = $request->get_header('x-freer-poll-nonce');
+        if (!wp_verify_nonce($nonce, 'freer_poll_vote_' . $id)) {
             return new WP_Error('invalid_nonce', 'Invalid nonce', array('status' => 403));
         }
 
-        $result = JFP_DB::cast_vote($id, $choices);
+        $result = Freer_Poll_DB::cast_vote($id, $choices);
         return rest_ensure_response($result);
     }
 
     public static function get_results($request) {
         $id = intval($request['id']);
         $poll = get_post($id);
-        if (!$poll || $poll->post_type !== 'jf_poll') {
+        if (!$poll || $poll->post_type !== 'freer_poll') {
             return new WP_Error('not_found', 'Poll not found', array('status' => 404));
         }
 
-        return rest_ensure_response(JFP_DB::get_results($id));
+        return rest_ensure_response(Freer_Poll_DB::get_results($id));
     }
 
     public static function get_comments($request) {
@@ -264,7 +264,7 @@ class JFP_REST {
 
             if ($existing_id) {
                 $existing = get_post($existing_id);
-                if ($existing && $existing->post_type === 'jf_poll') {
+                if ($existing && $existing->post_type === 'freer_poll') {
                     wp_update_post(array(
                         'ID' => $existing_id,
                         'post_title' => sanitize_text_field($p['question']),
@@ -281,7 +281,7 @@ class JFP_REST {
                 'post_title' => sanitize_text_field($p['question']),
                 'post_excerpt' => isset($p['description']) ? sanitize_textarea_field($p['description']) : '',
                 'post_status' => 'publish',
-                'post_type' => 'jf_poll',
+                'post_type' => 'freer_poll',
             ));
 
             if (!is_wp_error($new_id)) {
@@ -304,35 +304,35 @@ class JFP_REST {
     private static function apply_poll_meta($poll_id, $params) {
         if (isset($params['options']) && is_array($params['options'])) {
             $options = array_slice(array_map('sanitize_text_field', $params['options']), 0, 20);
-            update_post_meta($poll_id, '_jfp_options', $options);
+            update_post_meta($poll_id, '_freer_polls_options', $options);
         }
 
         if (isset($params['status'])) {
-            update_post_meta($poll_id, '_jfp_status', sanitize_key($params['status']));
+            update_post_meta($poll_id, '_freer_polls_status', sanitize_key($params['status']));
         }
 
         if (isset($params['expiry'])) {
-            update_post_meta($poll_id, '_jfp_expiry', sanitize_text_field($params['expiry']));
+            update_post_meta($poll_id, '_freer_polls_expiry', sanitize_text_field($params['expiry']));
         }
 
         if (isset($params['show_results'])) {
-            update_post_meta($poll_id, '_jfp_show_results', sanitize_key($params['show_results']));
+            update_post_meta($poll_id, '_freer_polls_show_results', sanitize_key($params['show_results']));
         }
 
         if (isset($params['vote_type'])) {
-            update_post_meta($poll_id, '_jfp_vote_type', sanitize_key($params['vote_type']));
+            update_post_meta($poll_id, '_freer_polls_vote_type', sanitize_key($params['vote_type']));
         }
 
         if (isset($params['allow_comments'])) {
-            update_post_meta($poll_id, '_jfp_allow_comments', (int) $params['allow_comments']);
+            update_post_meta($poll_id, '_freer_polls_allow_comments', (int) $params['allow_comments']);
         }
     }
 
     private static function poll_to_array($poll) {
-        $options = JFP_Meta::get_options($poll->ID);
-        $settings = JFP_Meta::get_display_settings($poll->ID);
-        $status = JFP_Meta::get_status($poll->ID);
-        $results = JFP_DB::get_results($poll->ID);
+        $options = Freer_Poll_Meta::get_options($poll->ID);
+        $settings = Freer_Poll_Meta::get_display_settings($poll->ID);
+        $status = Freer_Poll_Meta::get_status($poll->ID);
+        $results = Freer_Poll_DB::get_results($poll->ID);
 
         return array(
             'id' => (int) $poll->ID,
@@ -341,13 +341,13 @@ class JFP_REST {
             'slug' => $poll->post_name,
             'status' => $status,
             'options' => $options,
-            'expiry' => JFP_Meta::get_expiry($poll->ID),
+            'expiry' => Freer_Poll_Meta::get_expiry($poll->ID),
             'show_results' => $settings['show_results'],
             'vote_type' => $settings['vote_type'],
             'allow_comments' => $settings['allow_comments'],
             'total_votes' => $results['total'],
             'results' => $results,
-            'shortcode' => '[jf_poll id="' . $poll->ID . '"]',
+            'shortcode' => '[freer_poll id="' . $poll->ID . '"]',
             'date' => $poll->post_date,
         );
     }

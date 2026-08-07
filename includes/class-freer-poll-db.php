@@ -1,13 +1,15 @@
 <?php
 if (!defined('ABSPATH')) exit;
+if (!defined('FREER_POLLS_DB_VERSION')) { define('FREER_POLLS_DB_VERSION', '1.0.0'); }
 
-class JFP_DB {
+
+class Freer_Poll_DB {
 
     private static $table = null;
 
     public static function table_name() {
         global $wpdb;
-        return $wpdb->prefix . 'jf_poll_votes';
+        return $wpdb->prefix . 'freer_poll_votes';
     }
 
     public static function create_tables() {
@@ -35,7 +37,7 @@ class JFP_DB {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
 
-        update_option('jfp_db_version', JFP_DB_VERSION);
+        update_option('freer_polls_db_version', FREER_POLLS_DB_VERSION);
     }
 
     private static function get_ip_hash() {
@@ -53,16 +55,16 @@ class JFP_DB {
     private static function get_anon_id() {
         if (is_user_logged_in()) return '';
         // Cookie-based anon ID
-        $anon_id = isset($_COOKIE['jfp_anon_id']) ? $_COOKIE['jfp_anon_id'] : '';
+        $anon_id = isset($_COOKIE['freer_polls_anon_id']) ? $_COOKIE['freer_polls_anon_id'] : '';
         if (empty($anon_id)) {
             $anon_id = 'anon_' . wp_generate_password(32, false);
-            setcookie('jfp_anon_id', $anon_id, time() + YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+            setcookie('freer_polls_anon_id', $anon_id, time() + YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
         }
         return sanitize_text_field($anon_id);
     }
 
     private static function generate_hmac($poll_id, $choice_index, $ip_hash) {
-        $secret = get_option('jfp_settings', array());
+        $secret = get_option('freer_polls_settings', array());
         $hmac_secret = isset($secret['hmac_secret']) ? $secret['hmac_secret'] : wp_salt();
         return hash_hmac('sha256', $poll_id . '|' . $choice_index . '|' . $ip_hash . '|' . time(), $hmac_secret);
     }
@@ -75,13 +77,13 @@ class JFP_DB {
         $table = self::table_name();
 
         // Validate poll is open
-        $status = JFP_Meta::get_status($poll_id);
+        $status = Freer_Poll_Meta::get_status($poll_id);
         if ($status !== 'open') {
             return array('success' => false, 'error' => 'poll_closed', 'message' => 'This poll is closed.');
         }
 
         // Get poll options
-        $poll_options = JFP_Meta::get_options($poll_id);
+        $poll_options = Freer_Poll_Meta::get_options($poll_id);
         if (empty($poll_options)) {
             return array('success' => false, 'error' => 'no_options', 'message' => 'This poll has no options.');
         }
@@ -90,7 +92,7 @@ class JFP_DB {
         if (!is_array($choices)) $choices = array($choices);
         $choices = array_map('intval', $choices);
 
-        $vote_type = JFP_Meta::get_display_settings($poll_id)['vote_type'];
+        $vote_type = Freer_Poll_Meta::get_display_settings($poll_id)['vote_type'];
         if ($vote_type === 'single' && count($choices) > 1) {
             return array('success' => false, 'error' => 'single_only', 'message' => 'This poll allows only one choice.');
         }
@@ -107,7 +109,7 @@ class JFP_DB {
         $anon_id = $user_id ? '' : self::get_anon_id();
 
         // Rate limiting
-        $rate_limit = get_option('jfp_settings', array());
+        $rate_limit = get_option('freer_polls_settings', array());
         $limit = isset($rate_limit['rate_limit_per_hour']) ? intval($rate_limit['rate_limit_per_hour']) : 5;
         $recent = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table WHERE poll_id = %d AND ip_hash = %s AND created_at > %s",
@@ -160,7 +162,7 @@ class JFP_DB {
         global $wpdb;
         $table = self::table_name();
 
-        $options = JFP_Meta::get_options($poll_id);
+        $options = Freer_Poll_Meta::get_options($poll_id);
         if (empty($options)) return array();
 
         $rows = $wpdb->get_results($wpdb->prepare(

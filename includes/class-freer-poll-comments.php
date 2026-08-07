@@ -2,10 +2,10 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Comments support for jf_poll post type.
+ * Comments support for freer_poll post type.
  * Uses native WP comments but restricts to poll CPT only.
  */
-class JFP_Comments {
+class Freer_Poll_Comments {
 
     public static function register() {
         // Enable comments support on the CPT (already added via 'supports' => array('comments'))
@@ -14,21 +14,21 @@ class JFP_Comments {
         add_filter('pings_open', '__return_false');
 
         // AJAX handlers for frontend comment submission
-        add_action('wp_ajax_nopriv_jfp_post_comment', array(self::class, 'ajax_post_comment'));
-        add_action('wp_ajax_jfp_post_comment', array(self::class, 'ajax_post_comment'));
+        add_action('wp_ajax_nopriv_freer_polls_post_comment', array(self::class, 'ajax_post_comment'));
+        add_action('wp_ajax_freer_polls_post_comment', array(self::class, 'ajax_post_comment'));
     }
 
     public static function comments_open($open, $post_id) {
         $post = get_post($post_id);
-        if ($post && $post->post_type === 'jf_poll') {
-            $settings = JFP_Meta::get_display_settings($post_id);
+        if ($post && $post->post_type === 'freer_poll') {
+            $settings = Freer_Poll_Meta::get_display_settings($post_id);
             return (bool) $settings['allow_comments'];
         }
         return $open;
     }
 
     public static function ajax_post_comment() {
-        check_ajax_referer('jf_polls_rest', 'nonce');
+        check_ajax_referer('freer_polls_rest', 'nonce');
 
         $poll_id = intval($_POST['poll_id']);
         $content = isset($_POST['content']) ? trim(wp_unslash($_POST['content'])) : '';
@@ -45,11 +45,11 @@ class JFP_Comments {
         }
 
         $poll = get_post($poll_id);
-        if (!$poll || $poll->post_type !== 'jf_poll') {
+        if (!$poll || $poll->post_type !== 'freer_poll') {
             wp_send_json_error(array('message' => 'Poll not found.'), 404);
         }
 
-        $settings = JFP_Meta::get_display_settings($poll_id);
+        $settings = Freer_Poll_Meta::get_display_settings($poll_id);
         if (!$settings['allow_comments']) {
             wp_send_json_error(array('message' => 'Comments are disabled for this poll.'), 403);
         }

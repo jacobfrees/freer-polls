@@ -1,8 +1,8 @@
-/* Jacob Frees Evolves Polls — Admin JavaScript */
+/* Freer Polls — Admin JavaScript */
 
 jQuery(document).ready(function($) {
     // Auto-close warning
-    var $expiry = $('#jfp_poll_expiry');
+    var $expiry = $('#freer_poll_expiry');
     if ($expiry.length) {
         $expiry.on('change', function() {
             var val = $(this).val();
@@ -17,20 +17,20 @@ jQuery(document).ready(function($) {
     }
 
     // Update vote count via AJAX when editing
-    if (typeof pagenow !== 'undefined' && pagenow === 'jf_poll') {
+    if (typeof pagenow !== 'undefined' && pagenow === 'freer_poll') {
         var postId = $('#post_ID').val();
         if (postId) {
             $.ajax({
                 url: ajaxurl,
                 method: 'POST',
                 data: {
-                    action: 'jfp_admin_vote_count',
+                    action: 'freer_polls_admin_vote_count',
                     post_id: postId,
-                    nonce: jfpAdmin.nonce || ''
+                    nonce: freerPollsAdmin.nonce || ''
                 },
                 success: function(response) {
                     if (response.success) {
-                        $('.jfp-vote-count').text(response.data.count + ' votes cast');
+                        $('.freer-poll-vote-count').text(response.data.count + ' votes cast');
                     }
                 }
             });

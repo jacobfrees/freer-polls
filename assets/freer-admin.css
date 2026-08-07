@@ -1,35 +1,35 @@
-/* Jacob Frees Evolves Polls — Admin styles */
+/* Freer Polls — Admin styles */
 
-.jfp-meta-wrap {
+.freer-poll-meta-wrap {
     background: #fff;
     padding: 16px;
 }
 
-.jfp-meta-section {
+.freer-poll-meta-section {
     margin-bottom: 20px;
 }
 
-.jfp-meta-section h4 {
+.freer-poll-meta-section h4 {
     margin: 0 0 8px 0;
     font-size: 13px;
     font-weight: 600;
     color: #1d2327;
 }
 
-.jfp-meta-section textarea,
-.jfp-meta-section select,
-.jfp-meta-section input[type="datetime-local"] {
+.freer-poll-meta-section textarea,
+.freer-poll-meta-section select,
+.freer-poll-meta-section input[type="datetime-local"] {
     width: 100%;
     max-width: 500px;
 }
 
-.jfp-meta-section .description {
+.freer-poll-meta-section .description {
     font-size: 12px;
     color: #646970;
     margin-top: 4px;
 }
 
-.jfp-vote-count {
+.freer-poll-vote-count {
     font-size: 24px;
     font-weight: 700;
     color: #2271b1;
