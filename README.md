@@ -24,6 +24,9 @@ Freer Polls brings quick, focused polling to your own site. Create polls in a fe
 
 ## License
 
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html)
 GPLv2 or later. Free to use, modify, and share.
 
 Part of the [Freer Stack](https://github.com/jacobfrees/freer-stack).
+
+**Brand notice:** "Freer" and "Jacob Frees" are brand marks. The GPL license covers the code only. It does not grant the right to use the Freer name or the Jacob Frees branding to pass off someone else's product as Jacob Frees'.

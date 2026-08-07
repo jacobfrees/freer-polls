@@ -1,9 +1,14 @@
 <?php
 /**
  * Plugin Name: Freer Polls
+ * Plugin URI:  https://jacobfrees.com
  * Description: Custom polling system with voter tracking, write-in suggestions, and comment support.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      Jacob Frees
+ * Author URI:  https://jacobfrees.com
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: freer-polls
  */
 
 // Prevent direct access
