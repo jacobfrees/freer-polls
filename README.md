@@ -1,27 +1,29 @@
-# freeflow-polls
+# Freer Polls
 
-Add polls and votes to any WordPress post or page with voter tracking, write-in suggestions, and comments.
+Real-time polls and surveys for WordPress. Free, forever.
 
-**License:** GNU GPL v2 or later. Free, open source, no subscription, no lock-in — your data stays on your own WordPress site.
+Freer Polls brings quick, focused polling to your own site. Create polls in a few clicks, embed them anywhere, and watch live results. No survey SaaS, no per-poll fee, no feature walls.
 
-## Install
+## Features
 
-1. Download the latest `freeflow-polls.zip` from [jacobfrees.com/plugins/freeflow-polls/](https://jacobfrees.com/plugins/freeflow-polls/).
-2. In WordPress admin go to **Plugins → Add New → Upload Plugin**, upload the zip, then **Install Now** and **Activate**.
+- Unlimited polls
+- Live, real-time results
+- Shortcodes and blocks for placement anywhere
+- Own your data: responses live in your WordPress database
 
-## Auto-updates
+## Requirements
 
-Plugins distributed here can self-update from [jacobfrees.com](https://jacobfrees.com) over the FreeFlow Plugin Hub update channel.
+- WordPress 5.0+
+- PHP 7.2+
 
-## Development
+## Installation
 
-- Main plugin file: `jacobfrees-evolves-polls.php` (folder `freeflow-polls`).
-- Build a distributable zip from the repo root:
+1. Upload `freer-polls` to `/wp-content/plugins/`, or install from the Plugin Directory.
+2. Activate through the Plugins screen.
+3. Open **Freer Polls** in admin and create your first poll.
 
-```bash
-zip -r freeflow-polls.zip . -x "*.git*"
-```
+## License
 
-## Contributing
+GPLv2 or later. Free to use, modify, and share.
 
-Open source, GPL-2.0. Feel free to fork, patch, and open a PR.
+Part of the [Freer Stack](https://github.com/jacobfrees/freer-stack).
